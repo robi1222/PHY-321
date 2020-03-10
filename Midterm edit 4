@@ -1,0 +1,29 @@
+def cromer_vector(dt,V0,tfinal):
+    V0 = V0
+    m = 1
+    d = .1
+    
+    n = int(tfinal/dt)
+    
+    r = np.zeros([n,2])
+    v = np.zeros([n,2])
+    t = np.zeros(n)
+    
+    
+    r0 = np.array([d,0])
+    v0 = np.array([0,.5])
+    
+    r[0] = r0
+    v[0] = v0
+    
+    for i in range(n-1):
+        rabs = np.sqrt(sum(r[i]*r[i]))
+        a = (((-4*V0)/(m*d**4))*((rabs**3)-(rabs*d**2)))*(r[i]/rabs)
+        v[i+1] = v[i] + dt*a
+        r[i+1] = r[i] + dt*v[i+1]
+        t[i+1] = t[i] + dt
+        
+    return r,v,t
+
+r,v,t = cromer_vector(.01,1,20)
+plt.plot(r[:,0],r[:,1])
